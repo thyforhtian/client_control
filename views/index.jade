@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	.container
+		h1.jumbotron The app
+
+		- if (!messageInfo.length < 1)
+			.alert.alert-success= messageInfo
+		- if (!messageError.length < 1)
+			.alert.alert-success= messageError
+
+		- each user in users
+			= user.email + " -  " + user.password
+			br

@@ -1,0 +1,10 @@
+mixin flash
+	- if (!messageInfo.length < 1)
+		.alert.alert-success= messageInfo
+	- if (!messageError.length < 1 && messageError.length > 1)
+		.alert.alert-danger
+			ul
+				- each error in messageError
+					li= error
+	- if (!messageError.length < 1 && messageError.length === 1)
+		.alert.alert-danger= messageError
