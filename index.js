@@ -44,7 +44,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.set("view engine","jade");
 app.use(function(req,res,next) {
 	res.locals.isAuthenticated = req.isAuthenticated();
-	console.log(res.locals.isAuthenticated);
+	res.locals.user = req.user;
 	next();
 });
 ////////////

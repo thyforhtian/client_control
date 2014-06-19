@@ -5,10 +5,10 @@ block content
 	.container
 
 		.row: .col-lg-6.col-lg-offset-3.box
-			h2 Sign Up
+			h2 Add user
 			+flash
 
-			form(id="signup", method="POST", action="/signup", class="form form-horizontal")
+			form(id="signup", method="POST", action="/adduser", class="form form-horizontal")
 				.form-group
 					label.control-label.col-sm-2(for="email") Email	
 					.col-sm-10

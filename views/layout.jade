@@ -4,15 +4,23 @@ html
 		include includes/flash
 		link(rel="stylesheet", type="text/css", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
 		link(rel="stylesheet", type="text/css", href="/css/styles.css")
+		script(type="text/javascript", src="/bower_components/jquery/dist/jquery.min.js")
+		script(type="text/javascript", src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
 	body
 		nav.navbar.navbar-default.navbar-fixed-top
 			.container
+				.navbar-header
+					a.navbar-brand(href="/"): b Client Control
 				ul.nav.navbar-nav
 					li: a(href="/") Home
-					li: a(href="/signup") Sign up
+					li: a(href="/adduser") Add user
 				ul.nav.navbar-nav.pull-right
 					if isAuthenticated
-						li: a(href="/logout") Logout
+						li.dropdown
+							a.dropdown-toggle(data-toggle='dropdown', href="#")= user.email 
+								b.caret
+								ul.dropdown-menu
+									li: a(href="/logout") Logout
 					else
 						li: a(href="/login") Login
 		block content
