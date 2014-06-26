@@ -1,7 +1,7 @@
 module.exports = function(app,router,passport, User) {
 
 	// checks if user is logged in before proceding
-	app.use("/users*", isLoggedIn);
+	router.all("/users*", isLoggedIn);
 
 	/////////////////
 	// GET /adduser //

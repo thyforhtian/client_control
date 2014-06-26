@@ -22,7 +22,7 @@ module.exports = function(app, router, Client, Domain, Hosting) {
    * Renders addclient page
    */
   router.get("/clients/addclient", function(req, res) {
-    res.render("clients/addclient");
+    res.render("clients/addclient", {messageError: req.flash('error'), messageInfo: req.flash('info')});
   });
 
   /**
@@ -37,11 +37,12 @@ module.exports = function(app, router, Client, Domain, Hosting) {
 
     client.save(function(err) {
       if (err) {
-        if (err) {req.flash("error", err);}
+        // if (err) {req.flash("error", err);}
         var message = [];
         for (var error in err.errors) {
           message.push(capitalize(err.errors[error].message));
         }
+        console.log(message);
         if (message.length < 1 && err.code === 11000) {
           req.flash('error', "This client is already in our database.");
         } else {
@@ -174,6 +175,10 @@ module.exports = function(app, router, Client, Domain, Hosting) {
 //////////////////////
 // helper functions //
 //////////////////////
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
