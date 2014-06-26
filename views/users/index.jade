@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+	.container
+		h1 Users
+		.row
+			.col-lg-12
+				+flash
+		.row
+			.col-lg-7
+				table.table.table-striped
+					thead
+						tr
+							th Email
+							th Action
+					tbody
+						- each user in users
+							tr: td= user.email
+								td
+									form(id="delete_user",onsubmit="return confirm('Do you really want to delete this user?');", method="POST", action="/users/remove/#{user.id}?_method=DELETE")
+										input(type="hidden", name="_method", value="DELETE")
+										input(type="submit", value="Remove user", class="btn btn-danger btn-xs")
+			.col-lg-5
+				.box
+					h2 Add user
+
+					form(id="signup", method="POST", action="/users/adduser", class="form form-horizontal")
+						.form-group
+							label.control-label.col-sm-2(for="email") Email	
+							.col-sm-10
+								input(type="text", placeholder="email", name="email", class="form-control")
+						.form-group
+							label.control-label.col-sm-2(for="password") Password	
+							.col-sm-10
+								input(type="password", placeholder="password", name="password", class="form-control")
+						.form-group
+							.col-sm-10.col-sm-offset-2
+								input(type="submit", value="Sign up", class="btn btn-default")

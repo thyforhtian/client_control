@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+	.container
+		.row
+			.col-lg-8.col-lg-offset-2
+				.box
+					h2 Add Client
+					form(id="addClient", method="POST", action="/clients/addclient", class="form form-horizontal")
+						.form-group
+							label.control-label.col-sm-2(for="email") Email	
+							.col-sm-10
+								input(type="text", placeholder="email", name="email", class="form-control")
+						.form-group
+							label.control-label.col-sm-2(for="name") Name	
+							.col-sm-10
+								input(type="text", placeholder="name", name="name", class="form-control")
+						.form-group
+							label.control-label.col-sm-2(for="nick") Nick	
+							.col-sm-10
+								input(type="text", placeholder="nick", name="nick", class="form-control")
+						.form-group
+							.col-sm-10.col-sm-offset-2
+									input(type="submit", value="Add Client", class="btn btn-default")

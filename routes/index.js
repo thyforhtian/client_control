@@ -1,28 +1,22 @@
 module.exports = function(app,router,passport, User) {
 
-
-
-	///////////
-	// GET / //
-	///////////
-	router.get("/", isLoggedIn, function(req,res) {
-		User.find(function(err,users) {
-			if (err) {return err}
-			res.render("index", {users: users, messageError: req.flash('error'), messageInfo: req.flash('info')});
-		});
-	});
+	// checks if user is logged in before proceding
+	app.use("/users*", isLoggedIn);
 
 	/////////////////
 	// GET /adduser //
 	/////////////////
-	router.get('/adduser', isLoggedIn, function(req,res) {
-		res.render('adduser', {messageError: req.flash('error'), messageInfo: req.flash('info')});
+	router.get('/users',  function(req,res) {
+		User.find(function(err,users) {
+			if (err) {req.flash("error", err)}
+			res.render("users/index", {users: users, messageError: req.flash('error'), messageInfo: req.flash('info')});
+		});
 	});
 
 	//////////////////
 	// POST /adduser //
 	//////////////////
-	router.post('/adduser', function(req,res) {
+	router.post('/users/adduser', function(req,res) {
 		var user = new User({
 			'email': req.body.email,
 			'password': req.body.password
@@ -39,14 +33,30 @@ module.exports = function(app,router,passport, User) {
 				} else {
 					req.flash('error', message);
 				}
-				res.redirect('/adduser');
+				res.redirect('/users');
 			} else {
 				req.flash('info', "User created succesfully!");
-				res.redirect('/');
+				res.redirect('/users');
 			}
 			
 		});	
 
+	});
+
+	//////////////////
+	// DELETE user //
+	//////////////////
+	router.delete("/users/remove/:user_id",function(req,res) {
+		User.remove({_id: req.params.user_id}, function(err) {
+			if (err) {
+				req.flash('error',err);
+				res.redirect("/users");
+			} 
+			else {
+				req.flash('info', "successfully deleted.");
+				res.redirect("/users");
+			}
+		});
 	});
 
 	////////////////
@@ -56,11 +66,11 @@ module.exports = function(app,router,passport, User) {
 		res.render('login', {messageError: req.flash('error'), messageInfo: req.flash('info')});
 	});
 
-	router.post("/login",passport.authenticate('local-login',{ successRedirect: '/',
+	router.post("/login",passport.authenticate('local-login',{ successRedirect: '/clients',
 													                                   failureRedirect: '/login',
 													                                   failureFlash: true }));
 
-	router.get("/logout", isLoggedIn, function(req,res) {
+	router.get("/logout",  function(req,res) {
 		req.logout();
 		 res.redirect('/login');
 	});

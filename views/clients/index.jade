@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+	.container
+		h1 Main page
+		+flash
+		table.table.table-striped
+			thead
+				th Email
+				th Name
+				th Nick
+				th Hosting
+				th Domains
+				th 
+			tbody
+				each client in clients
+					tr
+						td= client.email
+						td= client.name
+						td= client.nick
+						td= client.hosting.length
+						td= client.domains.length
+						td: a.btn.btn-default.btn-xs(href="/clients/#{client.id}") View

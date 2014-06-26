@@ -1,0 +1,116 @@
+extends ../layout
+
+block content
+	.container
+		h1= client.email
+		.row
+			.col-lg-12
+				+flash
+				p <strong> Name: </strong>
+					= client.name
+				p: <strong> Nick: </strong>
+					= client.nick
+				h3 Domains
+				table.table.table-striped.table-condensed
+					thead
+						tr
+							th Name
+							th Start date
+							th End date
+							th Real price
+							th Billed price
+							th
+					tbody
+						each domain in client.domains
+							tr
+								td= domain.name
+								td= domain.startDate
+								td= domain.endDate
+								td= domain.realPrice
+								td= domain.billedPrice
+								td
+									form(id="delete_domain",onsubmit="return confirm('Do you really want to delete this domain?');", method="POST", action="/clients/#{client._id}/domains/#{domain._id}?_method=DELETE")
+										input(type="hidden", name="_method", value="DELETE")
+										input(type="submit", value="Remove", class="btn btn-danger btn-xs")
+				h3 Hosting
+				table.table.table-striped.table-condensed
+					thead
+						tr
+							th Name
+							th Start date
+							th End date
+							th Billed price
+							th
+					tbody
+						each hosting in client.hosting
+							tr
+								td= hosting.name
+								td= hosting.startDate
+								td= hosting.endDate
+								td= hosting.billedPrice
+								td
+									form(id="delete_hosting",onsubmit="return confirm('Do you really want to delete this hosting?');", method="POST", action="/clients/#{client._id}/hosting/#{hosting._id}?_method=DELETE")
+										input(type="hidden", name="_method", value="DELETE")
+										input(type="submit", value="Remove", class="btn btn-danger btn-xs")
+		.row
+			.col-lg-6
+				.box
+					h2 Add domain
+
+					form(id="signup", method="POST", action="/clients/#{client.id}/adddomain", class="form form-horizontal")
+						.form-group
+							label.control-label.col-sm-3(for="name") Name	
+							.col-sm-9
+								input(type="text", placeholder="Domain name", name="name", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="startDate") Start&nbsp;Date	
+							.col-sm-9
+								input(type="date", placeholder="start date", name="startDate", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="endDate") End&nbsp;Date	
+							.col-sm-9
+								input(type="date", placeholder="end date", name="endDate", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="realPrice") Real&nbsp;price	
+							.col-sm-9
+								.input-group
+									input(type="number", placeholder="real price", name="realPrice", class="form-control")
+									span.input-group-addon PLN
+
+						.form-group
+							label.control-label.col-sm-3(for="startDate") Billed&nbsp;Price	
+							.col-sm-9
+								.input-group
+									input(type="number", placeholder="billed price", name="billedPrice", class="form-control")
+									span.input-group-addon PLN
+
+						.form-group
+							.col-sm-10.col-sm-offset-3
+								input(type="submit", value="Add domain", class="btn btn-default")
+			.col-lg-6
+				.box
+					h2 Add hosting
+
+					form(id="signup", method="POST", action="/clients/#{client.id}/addhosting", class="form form-horizontal")
+						.form-group
+							label.control-label.col-sm-3(for="name") Name	
+							.col-sm-9
+								input(type="text", placeholder="Hosting name", name="name", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="startDate") Start&nbsp;Date	
+							.col-sm-9
+								input(type="date", placeholder="start date", name="startDate", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="endDate") End&nbsp;Date	
+							.col-sm-9
+								input(type="date", placeholder="end date", name="endDate", class="form-control")
+						.form-group
+							label.control-label.col-sm-3(for="startDate") Billed&nbsp;Price	
+							.col-sm-9
+								.input-group
+									input(type="number", placeholder="billed price", name="billedPrice", class="form-control")
+									span.input-group-addon PLN
+
+						.form-group
+							.col-sm-10.col-sm-offset-3
+								input(type="submit", value="Add hosting", class="btn btn-default")

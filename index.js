@@ -17,6 +17,9 @@ var router = express.Router();
 require('mongoose-assert')(mongoose);
 require('./config/passport')(passport);
 var User = require('./models/user');
+var Client = require('./models/client').Client;
+var Domain = require('./models/client').Domain;
+var Hosting = require('./models/client').Hosting;
 
 ////////
 // db //
@@ -32,8 +35,8 @@ db.once('open', function callback () {
 // config //
 ////////////
 app.use(logger('dev'));
-app.use(bodyParser());
-app.use(methodOverride());
+app.use(bodyParser.urlencoded());
+app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(flash());
 app.use(session({secret: "wholikescookies", cookie: { maxAge: 1000 * 60 * 5 }}));
@@ -51,6 +54,7 @@ app.use(function(req,res,next) {
 // routes //
 ////////////
 require('./routes/index')(app,router,passport, User);
+require('./routes/client')(app,router,Client,Domain, Hosting);
 
 ////////////
 // server //

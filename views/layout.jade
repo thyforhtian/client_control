@@ -7,13 +7,14 @@ html
 		script(type="text/javascript", src="/bower_components/jquery/dist/jquery.min.js")
 		script(type="text/javascript", src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
 	body
-		nav.navbar.navbar-default.navbar-fixed-top
+		nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse
 			.container
 				.navbar-header
 					a.navbar-brand(href="/"): b Client Control
 				ul.nav.navbar-nav
-					li: a(href="/") Home
-					li: a(href="/adduser") Add user
+					li: a(href="/") Clients
+					li: a(href="/clients/addclient") Add Client
+					li: a(href="/users") Users
 				ul.nav.navbar-nav.pull-right
 					if isAuthenticated
 						li.dropdown

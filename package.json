@@ -18,10 +18,11 @@
     "jade": "*",
     "passport": "*",
     "passport-local": "*",
-    "mongoose": "3.8.*",
+    "mongoose": "*",
     "mongoose-assert": "*",
     "bcrypt-nodejs": "*",
-    "connect-flash": "*"
+    "connect-flash": "*",
+    "mongoose-history": "*"
   },
   "devDependencies": {
     "gulp": "^3.8.1",

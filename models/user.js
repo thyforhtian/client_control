@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongooseHistory = require('mongoose-history');
 var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
@@ -18,6 +19,7 @@ var UserSchema = new Schema({
 UserSchema.methods.validPassword = function(pass) {
 	return bcrypt.compareSync(pass,this.password);
 };
+UserSchema.plugin(mongooseHistory);
 
 var User = mongoose.model("User", UserSchema);
 module.exports = User;
