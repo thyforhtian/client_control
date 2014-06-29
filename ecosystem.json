@@ -1,0 +1,33 @@
+{
+  "apps" : [{
+    "name"      : "client_control",
+    "script"    : "index.js",
+    "env": {
+      "COMMON_VARIABLE": "true"
+    },
+    "env_production" : {
+      "NODE_ENV": "production"
+    }
+  },{
+    "name"      : "client_control",
+    "script"    : "index.js"
+  }],
+  "deploy" : {
+    "production" : {
+      "user" : "root",
+      "host" : "luchowski.net",
+      "ref"  : "origin/master",
+      "repo" : "https://github.com/thyforhtian/client_control.git",
+      "path" : "/usr/share/nginx/html/client_control/production",
+      "post-deploy" : "pm2 startOrRestart ecosystem.json --env production"
+    },
+    "dev" : {
+      "user" : "root",
+      "host" : "luchowski.net",
+      "ref"  : "origin/master",
+      "repo" : "https://github.com/thyforhtian/client_control.git",
+      "path" : "/usr/share/nginx/html/client_control/development",
+      "post-deploy" : "pm2 startOrRestart ecosystem.json --env dev"
+    }
+  }
+}
